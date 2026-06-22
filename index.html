@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Ciudadanía N-400 | Immigration Easy USA</title>
+  <meta name="description" content="Calcula gratis cuándo puedes presentar tu solicitud de ciudadanía (N-400). Herramienta de Immigration Easy USA." />
+
+  <!-- Open Graph: para que se vea bonito al compartir el link -->
+  <meta property="og:title" content="Calculadora de Ciudadanía N-400 (Gratis)" />
+  <meta property="og:description" content="Descubre en segundos cuándo puedes aplicar a tu ciudadanía americana." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111111;
+      --card:      #191919;
+      --border:    #2a2a2a;
+      --magenta:   #e0007f;
+      --magenta-l: #ff2d9b;
+      --magenta-d: #a0005a;
+      --magenta-glow: rgba(224, 0, 127, 0.25);
+      --wa:        #25D366;
+      --wa-d:      #1da851;
+      --text:      #f0f0f0;
+      --text-muted:#888;
+      --text-dim:  #555;
+      --radius:    14px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 60px;
+    }
+
+    /* ── Brand bar ── */
+    .brandbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .brandbar .logo {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .brandbar .brand-text {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .brandbar .brand-text span { color: var(--magenta-l); }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--magenta-d), var(--magenta));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, var(--magenta-l), #ff7ac6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    /* ── Field group ── */
+    .field-group { margin-bottom: 26px; }
+
+    label.field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    input[type="date"],
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      color-scheme: dark;
+    }
+
+    input:focus {
+      border-color: var(--magenta);
+      box-shadow: 0 0 0 3px var(--magenta-glow);
+    }
+    input::placeholder { color: var(--text-dim); }
+
+    /* ── Radio group ── */
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .radio-option:hover { border-color: var(--magenta-d); background: #1a1a1a; }
+
+    .radio-option input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px; height: 18px; min-width: 18px;
+      border: 2px solid var(--text-dim);
+      border-radius: 50%;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: border-color 0.2s;
+    }
+    .radio-option input[type="radio"]:checked {
+      border-color: var(--magenta);
+      background: var(--magenta);
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--magenta);
+    }
+    .radio-option:has(input:checked) {
+      border-color: var(--magenta);
+      background: rgba(224, 0, 127, 0.07);
+    }
+    .radio-text strong { display: block; font-size: 0.95rem; color: var(--text); }
+    .radio-text small { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ── Button ── */
+    button.calcular {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--magenta), var(--magenta-l));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(224, 0, 127, 0.35);
+    }
+    button.calcular:hover { opacity: 0.9; box-shadow: 0 6px 28px rgba(224, 0, 127, 0.5); }
+    button.calcular:active { transform: scale(0.98); }
+
+    /* ── Results ── */
+    #resultado {
+      display: none;
+      margin-top: 28px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
+    .result-title {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--magenta); margin-bottom: 16px;
+    }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 420px) { .result-grid { grid-template-columns: 1fr; } }
+
+    .result-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 16px;
+      position: relative; overflow: hidden;
+    }
+    .result-item::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--magenta), var(--magenta-l));
+    }
+    .result-item.highlight::before { background: linear-gradient(90deg, #00c2a8, #00e0c0); }
+    .result-item .item-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+    }
+    .result-item .item-date { font-size: 1.25rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .result-item.highlight .item-date { color: #00e0c0; }
+    .result-item .item-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+    .countdown-strip {
+      margin-top: 14px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .countdown-strip .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .countdown-strip .msg { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+    .countdown-strip .msg strong { color: var(--text); }
+
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    .info-box {
+      background: rgba(224,0,127,0.06); border: 1px solid rgba(224,0,127,0.2);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      font-size: 0.83rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .info-box strong { color: var(--magenta-l); }
+
+    /* ── CTA / Lead capture card ── */
+    .cta-card {
+      display: none;
+      margin-top: 20px;
+      background: linear-gradient(160deg, #1a0f16, #191919);
+      border: 1px solid var(--magenta-d);
+      text-align: center;
+    }
+    .cta-card h2 {
+      font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.3;
+    }
+    .cta-card .cta-sub {
+      margin-top: 10px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;
+    }
+    .cta-card .cta-sub strong { color: var(--text); }
+
+    .wa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 22px; padding: 16px;
+      background: linear-gradient(135deg, var(--wa), var(--wa-d));
+      color: #fff; font-size: 1.05rem; font-weight: 800;
+      text-decoration: none; border-radius: var(--radius-sm);
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      transition: transform 0.1s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .wa-btn:hover { opacity: 0.94; box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+    .wa-btn:active { transform: scale(0.98); }
+    .wa-btn .wa-icon { font-size: 1.3rem; }
+
+    .or-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 22px 0 18px; color: var(--text-dim); font-size: 0.78rem;
+    }
+    .or-divider::before, .or-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .lead-form { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+    .lead-form input { width: 100%; }
+    .lead-form button {
+      width: 100%; padding: 14px; margin-top: 4px;
+      background: var(--surface); color: #fff; font-size: 0.98rem; font-weight: 700;
+      border: 1px solid var(--magenta); border-radius: var(--radius-sm);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .lead-form button:hover { background: rgba(224,0,127,0.12); }
+
+    .form-thanks {
+      display: none; margin-top: 18px; padding: 18px;
+      background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.3);
+      border-radius: var(--radius-sm); color: #8ef0b4; font-weight: 600;
+      font-size: 0.95rem; line-height: 1.5;
+    }
+
+    /* ── Footer legal ── */
+    footer { max-width: 560px; margin-top: 28px; text-align: center; }
+    .legal { font-size: 0.73rem; color: var(--text-dim); line-height: 1.6; padding: 0 4px; }
+    .legal strong { color: var(--text-muted); }
+    .credit { margin-top: 14px; font-size: 0.78rem; color: var(--text-muted); }
+    .credit span { color: var(--magenta-l); font-weight: 700; }
+
+    .error-msg { display: none; color: #ff6b6b; font-size: 0.82rem; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+  <!-- Brand -->
+  <div class="brandbar">
+    <div class="logo">🗽</div>
+    <div class="brand-text">IMMIGRATION EASY <span>USA</span></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="badge">Formulario N-400 · USCIS</div>
+    <h1>Calculadora de Elegibilidad para<br/><span>Ciudadanía Americana</span></h1>
+    <p>Descubre <strong>gratis</strong> y en segundos cuándo puedes presentar tu solicitud de naturalización (N-400), según tu fecha de residencia permanente.</p>
+  </header>
+
+  <!-- Main card -->
+  <div class="card">
+    <div class="field-group">
+      <label class="field-label" for="fecha-residente">📋 Fecha "Resident Since" en tu Green Card</label>
+      <input type="date" id="fecha-residente" />
+      <span class="error-msg" id="error-fecha">Por favor ingresa una fecha válida.</span>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">⚖️ Regla que aplica a tu caso</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="regla" value="5" checked />
+          <div class="radio-text">
+            <strong>Regla general — 5 años</strong>
+            <small>Para la mayoría de residentes permanentes.</small>
+          </div>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="regla" value="3" />
+          <div class="radio-text">
+            <strong>Casado/a con ciudadano/a de EE.UU. — 3 años</strong>
+            <small>Debes haber vivido en unión conyugal durante esos 3 años.</small>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <button class="calcular" onclick="calcular()">Calcular fechas →</button>
+
+    <div id="resultado">
+      <p class="result-title">📅 Resultados de tu elegibilidad</p>
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="item-label">Cumples los años requeridos el</div>
+          <div class="item-date" id="fecha-elegibilidad">—</div>
+          <div class="item-sub" id="regla-aplicada">—</div>
+        </div>
+        <div class="result-item highlight">
+          <div class="item-label">🚀 Fecha más temprana para presentar</div>
+          <div class="item-date" id="fecha-presentacion">—</div>
+          <div class="item-sub">90 días antes del aniversario</div>
+        </div>
+      </div>
+
+      <div class="countdown-strip" id="countdown-strip">
+        <div class="icon" id="countdown-icon">⏳</div>
+        <div class="msg" id="countdown-msg">—</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info-box">
+        <strong>¿Qué significa esto?</strong><br/>
+        USCIS permite presentar la N-400 hasta <strong>90 días antes</strong> de cumplir el período de residencia requerido. Presentarla antes de esa ventana resultará en rechazo. También debes haber residido en tu estado o distrito por al menos <strong>3 meses</strong> antes de solicitar.
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA / Lead capture (aparece tras calcular) -->
+  <div class="card cta-card" id="cta">
+    <h2>¿Quieres que prepare tu N-400 por ti? 🇺🇸</h2>
+    <p class="cta-sub">Soy <strong>Julio Londoño</strong>, paralegal con <strong>+23 años</strong> de experiencia en inmigración. Te ayudo a preparar y presentar tu solicitud de ciudadanía paso a paso, sin estrés y sin errores.</p>
+
+    <a class="wa-btn" id="wa-btn" href="https://wa.me/13213319377" target="_blank" rel="noopener">
+      <span class="wa-icon">💬</span> Escríbeme por WhatsApp ahora
+    </a>
+
+    <div class="or-divider">o déjame tus datos y yo te contacto</div>
+
+    <form class="lead-form" id="lead-form">
+      <input type="text"  name="Nombre"   placeholder="Tu nombre completo" required />
+      <input type="email" name="Email"    placeholder="Tu correo electrónico" required />
+      <input type="tel"   name="Telefono" placeholder="Tu teléfono / WhatsApp" required />
+      <!-- Campos ocultos para FormSubmit -->
+      <input type="hidden" name="_subject" value="🔥 Nuevo lead - Calculadora N-400" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="Fecha estimada para aplicar" id="hf-fecha" value="" />
+      <input type="hidden" name="Regla seleccionada" id="hf-regla" value="" />
+      <input type="hidden" name="Origen" value="Calculadora N-400 (lead magnet)" />
+      <button type="submit">Quiero que me contacten →</button>
+    </form>
+
+    <div class="form-thanks" id="form-thanks">✅ ¡Gracias! Recibí tus datos y te contactaré muy pronto. Si quieres, escríbeme directo por WhatsApp para ir más rápido. 🙌</div>
+  </div>
+
+  <!-- Footer legal -->
+  <footer>
+    <p class="legal">
+      ⚠️ <strong>Aviso legal:</strong> Esta herramienta es únicamente una <em>estimación informativa</em> basada en los plazos generales de USCIS. Los resultados <strong>no constituyen asesoría legal</strong> ni garantizan elegibilidad. Factores como ausencias al exterior, condenas penales u otras circunstancias pueden afectar tu caso. Immigration Easy USA ofrece servicios de <strong>preparación de documentos</strong>; no somos un bufete de abogados. Consulta con un abogado de inmigración o representante acreditado antes de tomar decisiones legales.
+    </p>
+    <p class="credit">Una herramienta gratuita de <span>Immigration Easy USA</span></p>
+  </footer>
+
+  <script>
+    const WHATSAPP = '13213319377'; // numero de negocio (sin + ni guiones)
+
+    function formatearFecha(date) {
+      const opciones = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' };
+      return date.toLocaleDateString('es-US', opciones);
+    }
+    function diasEntre(fechaA, fechaB) {
+      return Math.round((fechaB - fechaA) / (1000 * 60 * 60 * 24));
+    }
+
+    function calcular() {
+      const input = document.getElementById('fecha-residente').value;
+      const errorEl = document.getElementById('error-fecha');
+      const resultadoEl = document.getElementById('resultado');
+
+      if (!input) {
+        errorEl.style.display = 'block';
+        resultadoEl.style.display = 'none';
+        document.getElementById('cta').style.display = 'none';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      const regla = parseInt(document.querySelector('input[name="regla"]:checked').value);
+      const [anio, mes, dia] = input.split('-').map(Number);
+
+      const fechaElegibilidad = new Date(Date.UTC(anio + regla, mes - 1, dia));
+      const fechaPresentacion = new Date(fechaElegibilidad);
+      fechaPresentacion.setUTCDate(fechaPresentacion.getUTCDate() - 90);
+
+      const hoy = new Date();
+      const hoyUTC = new Date(Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()));
+
+      const fechaElegStr = formatearFecha(fechaElegibilidad);
+      const fechaPresStr = formatearFecha(fechaPresentacion);
+
+      document.getElementById('fecha-elegibilidad').textContent = fechaElegStr;
+      document.getElementById('fecha-presentacion').textContent = fechaPresStr;
+      document.getElementById('regla-aplicada').textContent = regla === 3
+        ? 'Regla de 3 años (cónyuge de ciudadano/a)'
+        : 'Regla general de 5 años';
+
+      const icon = document.getElementById('countdown-icon');
+      const msg  = document.getElementById('countdown-msg');
+      const strip = document.getElementById('countdown-strip');
+      const diasParaPresentar = diasEntre(hoyUTC, fechaPresentacion);
+      const diasParaElegible  = diasEntre(hoyUTC, fechaElegibilidad);
+
+      if (hoyUTC >= fechaElegibilidad) {
+        icon.textContent = '✅';
+        msg.innerHTML = '<strong>¡Ya eres elegible!</strong> Puedes presentar tu N-400 en cualquier momento. Asegúrate de cumplir todos los demás requisitos.';
+        strip.style.borderColor = 'rgba(0,224,192,0.3)';
+      } else if (hoyUTC >= fechaPresentacion) {
+        icon.textContent = '🟢';
+        msg.innerHTML = `<strong>¡Ventana abierta!</strong> Ya puedes presentar la N-400. Tu aniversario de residencia es en <strong>${diasParaElegible} día${diasParaElegible !== 1 ? 's' : ''}</strong>.`;
+        strip.style.borderColor = 'rgba(0,224,192,0.3)';
+      } else {
+        const meses = Math.floor(diasParaPresentar / 30);
+        const diasRestantes = diasParaPresentar % 30;
+        let tiempoStr = '';
+        if (meses > 0) {
+          tiempoStr += `${meses} mes${meses !== 1 ? 'es' : ''}`;
+          if (diasRestantes > 0) tiempoStr += ` y ${diasRestantes} día${diasRestantes !== 1 ? 's' : ''}`;
+        } else {
+          tiempoStr = `${diasParaPresentar} día${diasParaPresentar !== 1 ? 's' : ''}`;
+        }
+        icon.textContent = '⏳';
+        msg.innerHTML = `Podrás presentar la N-400 en aproximadamente <strong>${tiempoStr}</strong> (${fechaPresStr}).`;
+        strip.style.borderColor = 'var(--border)';
+      }
+
+      resultadoEl.style.display = 'block';
+
+      // ── Activar captura de lead ──
+      const reglaTxt = regla === 3 ? 'Regla de 3 años (cónyuge)' : 'Regla general de 5 años';
+      document.getElementById('hf-fecha').value = fechaPresStr;
+      document.getElementById('hf-regla').value = reglaTxt;
+
+      const waMsg = `Hola Julio 👋, usé tu Calculadora de Ciudadanía. Quiero que me ayudes a preparar mi N-400. Según la calculadora, mi fecha más temprana para aplicar sería el ${fechaPresStr} (${reglaTxt}).`;
+      document.getElementById('wa-btn').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
+
+      const cta = document.getElementById('cta');
+      cta.style.display = 'block';
+      cta.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    document.getElementById('fecha-residente').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calcular();
+    });
+
+    // ── Formulario → FormSubmit (envía leads al correo) ──
+    document.getElementById('lead-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      try {
+        await fetch('https://formsubmit.co/ajax/juliolondono14@gmail.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+      } catch (err) { /* aun si falla la red, mostramos gracias y queda WhatsApp */ }
+      form.style.display = 'none';
+      document.getElementById('form-thanks').style.display = 'block';
+      document.getElementById('form-thanks').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
