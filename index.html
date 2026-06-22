@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora de Ciudadanía N-400 | Immigration Easy USA</title>
   <meta name="description" content="Calcula gratis cuándo puedes presentar tu solicitud de ciudadanía (N-400). Herramienta de Immigration Easy USA." />
+  <link rel="icon" type="image/png" href="logo.png" />
 
   <!-- Open Graph: para que se vea bonito al compartir el link -->
   <meta property="og:title" content="Calculadora de Ciudadanía N-400 (Gratis)" />
@@ -46,24 +47,17 @@
       padding: 28px 16px 60px;
     }
 
-    /* ── Brand bar ── */
-    .brandbar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
+    /* ── Brand logo ── */
+    .brand-logo {
+      display: block;
+      width: 150px;
+      height: auto;
+      margin: 0 auto 26px;
+      background: #fff;
+      padding: 14px 16px;
+      border-radius: 18px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.45);
     }
-    .brandbar .logo {
-      font-size: 1.5rem;
-      line-height: 1;
-    }
-    .brandbar .brand-text {
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      font-size: 1rem;
-      color: #fff;
-    }
-    .brandbar .brand-text span { color: var(--magenta-l); }
 
     /* ── Header ── */
     header {
@@ -331,10 +325,7 @@
 <body>
 
   <!-- Brand -->
-  <div class="brandbar">
-    <div class="logo">🗽</div>
-    <div class="brand-text">IMMIGRATION EASY <span>USA</span></div>
-  </div>
+  <img class="brand-logo" src="logo.png" alt="Immigration Easy U.S.A. LLC" />
 
   <!-- Header -->
   <header>
